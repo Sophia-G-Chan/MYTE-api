@@ -7,8 +7,10 @@ import calendarRouter from './routes/calendar.js'
 const app = express();
 const {PORT, CORS_ORIGIN} = process.env;
 
-app.use('/tasks', taskRouter);
+app.use(express.json());
+app.use(cors({CORS_ORIGIN}));
 
+app.use('/tasks', taskRouter);
 app.use('/calendars', calendarRouter);
 
 app.use('/', (_req, res) => {
