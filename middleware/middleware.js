@@ -3,7 +3,7 @@ import configuration from "./../knexfile.js";
 
 const knex = initKnex(configuration)
 
-const readTasks = async () => {
+const readTasks = async (user_id) => {
     try{
         const tasks = await knex('tasks')
         .orderBy("task_id", "asc");

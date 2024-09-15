@@ -5,11 +5,8 @@ const router = express.Router();
 
 router
     .get('/', taskController.allTasks)
-    .post('/', taskController.addATasks);
- //TODO: POST
-
-     //TODO: edit
-
-      //TODO: delete
+    .post('/', taskController.addATasks)
+    .put('/', taskController.editATask)
+    .delete('/', taskController.deleteATask);
 
 export default router;
