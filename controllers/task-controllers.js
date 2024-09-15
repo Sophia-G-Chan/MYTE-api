@@ -37,7 +37,7 @@ const addATasks = async (req, res) => {
             return res.status(400).json({ message: "Invalid date format" });
         }
 
-        const [newTask] = await knex('tasks')
+        const [insertedId] = await knex('tasks')
             .insert({
                 user_id,
                 task_name,
@@ -47,6 +47,7 @@ const addATasks = async (req, res) => {
                 status,
                 created_at: knex.fn.now()
             })
+        const newTask = await knex('tasks').where({task_id: insertedId}).first();
 
         res.status(200).json(newTask);
     } catch (error) {
