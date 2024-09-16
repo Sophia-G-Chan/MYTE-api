@@ -13,7 +13,7 @@ const allTasks = async (_req, res) => {
         res.status(500).send('Unable to get tasks');
     }
 }
-//TODO: add new task = POST
+
 const addATasks = async (req, res) => {
     try {
         const {
@@ -49,34 +49,66 @@ const addATasks = async (req, res) => {
             })
         const newTask = await knex('tasks').where({task_id: insertedId}).first();
 
-        res.status(200).json(newTask);
+        res.status(201).json(newTask);
     } catch (error) {
         console.error({ message: error.message, stack: error.stack });
         res.status(500).send('Unable to add a tasks');
     }
 }
 
-//TODO: edit = PUT
 const editATask = async (req, res) => {
     try {
         const selectedTask = req.params.taskId;
-        const tasks = await readTasks();
-        console.log(tasks)
-        res.status(200).send(tasks);
+        const {
+            user_id,
+            task_name,
+            description,
+            start_date_and_time,
+            end_date_and_time,
+            status
+        } = req.body;
+
+        const task = await knex('tasks').where({task_id: selectedTask}).first();
+
+        if (!task) {
+            return res.status(404).send({message: 'Task not found'})
+        }
+
+        const startDate = new Date(start_date_and_time);
+        const endDate = new Date(end_date_and_time);
+
+        await knex('tasks').where({task_id: selectedTask}).update({
+            user_id,
+            task_name,
+            description,
+            start_date_and_time: startDate,
+            end_date_and_time: endDate,
+            status,
+            updated_at: knex.fn.now()
+        });
+        const editedTask = await knex('tasks').where({ task_id: selectedTask}).first();
+        res.status(201).json(editedTask);
     } catch (error) {
         console.error(error);
-        res.status(500).send('Unable to get tasks');
+        res.status(500).send('Unable to edit a task');
     }
 }
-//TODO: delete
+
 const deleteATask = async (req, res) => {
     try {
-        const tasks = await readTasks();
-        console.log(tasks)
-        res.status(200).send(tasks);
+        const selectedTask = req.params.taskId;
+        const task = await knex('tasks').where({task_id: selectedTask}).first();
+
+        if (!task) {
+            return res.status(404).send({message: 'Task not found'})
+        }
+
+        await knex('tasks').where({ task_id: selectedTask}).del()
+
+        res.status(204).send({message: 'Task deleted'});
     } catch (error) {
         console.error(error);
-        res.status(500).send('Unable to get tasks');
+        res.status(500).send('Unable to delete task');
     }
 }
 export {
