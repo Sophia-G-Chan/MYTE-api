@@ -3,7 +3,7 @@ export function up(knex) {
         .createTable("users", (table) => {
             table.increments('id').unsigned().primary();
             table.string('username').notNullable();
-            table.string('email').notNullable();
+            table.string('email');
             table.string('password');
             table.timestamp('created_at').default(knex.fn.now());
             table.timestamp('updated_at').default(knex.raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
@@ -16,9 +16,11 @@ export function up(knex) {
                 .onUpdate('CASCADE')
                 .onDelete('CASCADE');
             table.string('task_name').notNullable();
-            table.string('description').notNullable();
-            table.timestamp('start_date_and_time').notNullable();
-            table.timestamp('end_date_and_time').notNullable();
+            table.string('description');
+            table.string('priority');
+            table.string('order');
+            table.timestamp('start_date_and_time');
+            table.timestamp('end_date_and_time');
             table.string('status');
             table.timestamp('created_at').default(knex.fn.now());
             table.timestamp('updated_at').default(knex.raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
@@ -42,26 +44,34 @@ export function up(knex) {
             table.timestamp('created_at').default(knex.fn.now());
             table.timestamp('updated_at').default(knex.raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
         })
-        .createTable("goals", (table) => {
+        .createTable("lists", (table) => {
             table.increments('id').primary();
-            table.integer('task_id').unsigned()
-                .references('task_id')
-                .inTable('tasks')
-                .onUpdate('CASCADE')
-                .onDelete('CASCADE');
-            table.string('goal').notNullable();
-            table.string('description').notNullable();
-            table.timestamp('start_date_and_time').notNullable();
-            table.timestamp('end_date_and_time').notNullable();
+            table.string('list_name').notNullable();
+            table.string('description');
+            table.timestamp('start_date_and_time');
+            table.timestamp('end_date_and_time');
             table.string('status');
             table.timestamp('created_at').default(knex.fn.now());
             table.timestamp('updated_at').default(knex.raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
+        })
+        .createTable("list_tasks", (table) => {
+            table.increments("id").primary();
+            table.integer("list_id").unsigned()
+                .reference('id')
+                .inTable('lists')
+                .onUpdate("CASCADE")
+                .onDelete("CASCADE");
+            table.integer("task_id").unsigned()
+                .reference("task_id")
+                .inTabe("tasks")
+                .onUpdate("CASCADE")
+                .onDelete("CASCADE")
         })
 };
 
 export function down(knex) {
     return knex.schema
-        .dropTableIfExists('goals')
+        .dropTableIfExists('lists')
         .dropTableIfExists('calendar')
         .dropTableIfExists('tasks')
         .dropTableIfExists('users')
