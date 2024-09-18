@@ -1,11 +1,11 @@
 import express from 'express'
-import { google } from 'googleapis'
+import * as calendarController from '../controllers/calendar-controllers.js';
 
 const router = express.Router();
 
-const auth2Client = new google.auth.OAuth2(
-    process.env.CLIENT_ID,
-
-)
+router
+    .get("/google", calendarController.getGoogle)
+    .get("/google/redirect", calendarController.redirect)
+    .get('/google/schedule_event', calendarController.scheduleEvents)
 
 export default router;
