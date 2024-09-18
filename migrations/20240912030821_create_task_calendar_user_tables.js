@@ -57,13 +57,13 @@ export function up(knex) {
         .createTable("list_tasks", (table) => {
             table.increments("id").primary();
             table.integer("list_id").unsigned()
-                .reference('id')
+                .references('id')
                 .inTable('lists')
                 .onUpdate("CASCADE")
                 .onDelete("CASCADE");
             table.integer("task_id").unsigned()
-                .reference("task_id")
-                .inTabe("tasks")
+                .references("task_id")
+                .inTable("tasks")
                 .onUpdate("CASCADE")
                 .onDelete("CASCADE")
         })
