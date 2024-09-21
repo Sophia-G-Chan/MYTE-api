@@ -1,5 +1,4 @@
 import { google } from 'googleapis'
-import axios from 'axios';
 import 'dotenv/config';
 import dayjs from 'dayjs';
 
@@ -31,13 +30,12 @@ const redirect = async (req, res) => {
 
     try {
         console.log("Attempting to get tokens with code:", code);
-        const { tokens} = await oauth2Client.getToken(code)
+        const { tokens } = await oauth2Client.getToken(code)
         oauth2Client.setCredentials(tokens)
         res.send({ message: "You have successfully logged in" })
     }catch (error) {
         res.status(500).send({message: "Error during login"})
     }
-
 }
 
 const scheduleEvents = async (req, res) => {

@@ -32,7 +32,7 @@ export async function seed(knex) {
             description: "Description for test",
             start_date_and_time: new Date(2024, 8, 13, 15, 30, 0),
             end_date_and_time: new Date(2024, 8, 13, 18, 30, 0),
-            status: "Pending"
+            status: "In Progress"
         },
         {
             user_id: 1,
@@ -40,7 +40,7 @@ export async function seed(knex) {
             description: "Description for Last day of class",
             start_date_and_time: new Date(2024, 8, 27, 15, 30, 0),
             end_date_and_time: new Date(2024, 8, 27, 16, 0, 0),
-            status: "Pending"
+            status: "In Progress"
         }
     ])
 

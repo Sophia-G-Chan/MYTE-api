@@ -3,6 +3,7 @@ import 'dotenv/config';
 import cors from 'cors';
 import taskRouter from './routes/tasks.js'
 import calendarRouter from './routes/calendar.js'
+import listRouter from './routes/lists.js'
 
 const app = express();
 const {PORT, CORS_ORIGIN} = process.env;
@@ -12,6 +13,7 @@ app.use(cors({CORS_ORIGIN}));
 
 app.use('/tasks', taskRouter);
 app.use('/calendars', calendarRouter);
+app.use('/lists', listRouter);
 
 app.use('/', (_req, res) => {
     res.send('Hello, welcome to the back-end server for JourneyTask');
