@@ -13,7 +13,7 @@ export async function seed(knex) {
         {
             username: "testuser",
             email: 'test@example.com',
-            password:'1234'
+            password: '1234'
         }
     ]);
 
@@ -41,27 +41,50 @@ export async function seed(knex) {
             start_date_and_time: new Date(2024, 8, 27, 15, 30, 0),
             end_date_and_time: new Date(2024, 8, 27, 16, 0, 0),
             status: "In Progress"
+        },
+        {
+            user_id: 1,
+            task_name: "Feed my Pets 🐱🐶",
+            description: "Pet food only no treats today",
+            start_date_and_time: new Date(2024, 8, 27, 10, 0, 0),
+            end_date_and_time: new Date(2024, 8, 27, 11, 30, 0),
+            status: "Not Started"
+        },
+        {
+            user_id: 1,
+            task_name: "Plan Sprint",
+            description: "Prepare sprint planning for the upcoming project",
+            start_date_and_time: new Date(2024, 8, 28, 10, 0, 0),
+            end_date_and_time: new Date(2024, 8, 28, 11, 30, 0),
+            status: "Not Started"
+        },
+        {
+            user_id: 1,
+            task_name: "Update Resume",
+            description: "Add new project details and skills to resume",
+            start_date_and_time: new Date(2024, 8, 30, 9, 0, 0),
+            end_date_and_time: new Date(2024, 8, 30, 10, 30, 0),
+            status: "In Progress"
         }
     ])
 
     await knex('lists').insert([
         {
-            id: 1,
-            list_name: "Complete Project",
-            description: "Project tasks",
-            status: "In Progress"
+            list_name: "📋Complete Project",
         },
         {
-            id: 2,
             list_name: "Prepare Presentation",
-            description: "Presentation tasks",
-            status: "Not Started"
+        },
+        {
+            list_name: "Personal",
         }
     ])
 
     await knex('list_tasks').insert([
-        { id: 1, list_id: 1, task_id: 1 },
-        { id: 2, list_id: 1, task_id: 2 },
-        { id: 3, list_id: 2, task_id: 3 }
+        { list_id: 1, task_id: 1 },
+        { list_id: 1, task_id: 2 },
+        { list_id: 2, task_id: 3 },
+        { list_id: 3, task_id: 4 },
+        { list_id: 3, task_id: 5 }
     ])
 }

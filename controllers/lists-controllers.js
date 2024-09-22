@@ -23,7 +23,39 @@ const allListTasks = async (_req, res) => {
     }
 }
 
+const editAList = async (req, res) => {
+    try{
+        const selectedList = req.params.listId;
+        const {list_name} = req.body;
+
+        const list = await knex('lists').where({id: selectedList}).first();
+
+        if (!list) {
+            return res.status(404).send({message: 'Task not found'})
+        }
+
+        await knex('lists').where({id: selectedList}).update({
+            list_name
+        })
+
+        const editedList = await knex('lists').where({id: selectedList}).first();
+        res.status(201).json(editedList)
+    } catch (error){
+        res.status(500).send('Unable to edit list')
+    }
+}
+
+const addAList = async (req, res) => {
+    try{
+
+    }catch (error){
+        console.log("Unable to add list")
+    }
+}
+
 export {
     allLists,
-    allListTasks
+    allListTasks,
+    editAList,
+    addAList
 }

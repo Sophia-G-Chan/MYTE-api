@@ -1,5 +1,5 @@
-export function up(knex) {
-    return knex.schema
+export async function up(knex) {
+    await knex.schema
         .createTable("users", (table) => {
             table.increments('id').unsigned().primary();
             table.string('username').notNullable();
@@ -15,8 +15,8 @@ export function up(knex) {
                 .inTable('users')
                 .onUpdate('CASCADE')
                 .onDelete('CASCADE');
-            table.string('task_name').notNullable();
-            table.string('description');
+            table.string('task_name', 255).notNullable();
+            table.string('description', 255);
             table.string('priority');
             table.string('order');
             table.timestamp('start_date_and_time');
@@ -46,7 +46,7 @@ export function up(knex) {
         })
         .createTable("lists", (table) => {
             table.increments('id').primary();
-            table.string('list_name').notNullable();
+            table.string('list_name', 255);
             table.timestamp('created_at').default(knex.fn.now());
             table.timestamp('updated_at').default(knex.raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
         })
@@ -62,11 +62,19 @@ export function up(knex) {
                 .inTable("tasks")
                 .onUpdate("CASCADE")
                 .onDelete("CASCADE")
-        })
+        });
+
+    await knex.raw('ALTER DATABASE journeytask CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci');
+    await knex.raw('ALTER TABLE tasks CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
+    await knex.raw('ALTER TABLE tasks MODIFY task_name VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL')
+    await knex.raw('ALTER TABLE tasks MODIFY description VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci')
+
+    await knex.raw('ALTER TABLE lists MODIFY list_name VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ')
 };
 
 export function down(knex) {
     return knex.schema
+        .dropTableIfExists('list_tasks')
         .dropTableIfExists('lists')
         .dropTableIfExists('calendar')
         .dropTableIfExists('tasks')
