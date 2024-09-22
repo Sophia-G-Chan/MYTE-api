@@ -1,10 +1,10 @@
-import { readLists } from "../middleware/middleware.js";
+import { readLists, readListTasks } from "../middleware/middleware.js";
 import initKnex from "knex";
 import configuration from "../knexfile.js";
 
 const knex = initKnex(configuration)
 
-const allTasks = async (_req, res) => {
+const allLists = async (_req, res) => {
     try {
         const response = await readLists();
         res.status(200).send(response);
@@ -14,6 +14,16 @@ const allTasks = async (_req, res) => {
     }
 }
 
+const allListTasks = async (_req, res) => {
+    try{
+        const response = await readListTasks();
+        res.status(200).send(response);
+    } catch (error){
+        res.status(500).send('Unable to get list-tasks')
+    }
+}
+
 export {
-    allTasks
+    allLists,
+    allListTasks
 }

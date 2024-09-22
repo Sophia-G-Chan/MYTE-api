@@ -24,9 +24,17 @@ const findATasks = async (id) => {
 
 const readLists = async (user_id) => {
     try{
-        const list = await knex('lists').orderBy("id", "asc");
-        console.log(list)
-        return list
+        const lists = await knex('lists').orderBy("id", "asc");
+        return lists
+    } catch (error) {
+        console.error('Error reading lists:', error);
+    }
+}
+
+const readListTasks = async (user_id) => {
+    try{
+        const list_tasks = await knex('list_tasks').orderBy("id", "asc");
+        return list_tasks
     } catch (error) {
         console.error('Error reading lists:', error);
     }
@@ -35,5 +43,6 @@ const readLists = async (user_id) => {
 export {
     readTasks,
     findATasks,
-    readLists
+    readLists,
+    readListTasks
 }

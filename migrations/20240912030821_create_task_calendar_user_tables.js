@@ -47,10 +47,6 @@ export function up(knex) {
         .createTable("lists", (table) => {
             table.increments('id').primary();
             table.string('list_name').notNullable();
-            table.string('description');
-            table.timestamp('start_date_and_time');
-            table.timestamp('end_date_and_time');
-            table.string('status');
             table.timestamp('created_at').default(knex.fn.now());
             table.timestamp('updated_at').default(knex.raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
         })
