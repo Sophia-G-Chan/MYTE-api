@@ -16,7 +16,7 @@ app.use('/calendars', calendarRouter);
 app.use('/lists', listRouter);
 
 app.use('/', (_req, res) => {
-    res.send('Hello, welcome to the back-end server for JourneyTask');
+    res.send('Hello, welcome to the back-end server for MYTE');
 })
 
 app.use((err, _req, res, next) => {
