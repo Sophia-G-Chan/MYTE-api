@@ -25,7 +25,6 @@ const addATasks = async (req, res) => {
             status
         } = req.body;
 
-        console.log(req.body)
         if (!user_id || !task_name || !description || !start_date_and_time || !end_date_and_time || !status) {
             return res.status(400).json({ message: 'Missing required fields' })
         }

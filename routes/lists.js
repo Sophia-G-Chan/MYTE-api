@@ -8,5 +8,6 @@ router
     .get("/list-tasks", listController.allListTasks)
     .put("/:listId", listController.editAList)
     .post("/", listController.addAList)
+    .delete('/:listId', listController.deleteAList)
 
 export default router;
