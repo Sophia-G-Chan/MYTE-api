@@ -1,4 +1,4 @@
-# <img src="public/logos/journeytask-white-logo-cropped.svg" width=25px height=25px > JourneyTask API - Sophia Chan Capstone Project
+# <img src="public/logos/journeytask-white-logo-cropped.svg" width=25px height=25px > MYTE API - Sophia Chan Capstone Project
 ## Table of Contents
 1. [Overview](#overview)
 2. [Endpoints](#endpoints)
