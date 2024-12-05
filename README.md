@@ -18,7 +18,7 @@ List endpoints that your server will implement, including HTTP methods, paramete
 
 | Parameter | Type | Description    |
 | :--------  | :-------- |  :------------------------ |
-| `/tasks` | `return` |  This endpoint returns an array of objects |
+| `/tasks` | `return` |  This endpoint returns an array of objects |g
 
 #### Adds a new task
 
